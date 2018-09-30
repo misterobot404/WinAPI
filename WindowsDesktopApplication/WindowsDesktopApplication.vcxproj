@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{D900EE10-8F03-4A9E-8CB5-B5366C4B6013}</ProjectGuid>
+    <ProjectGuid>{060A37EB-F3A1-4F52-B4FF-B1071552CADE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>My12</RootNamespace>
+    <RootNamespace>WindowsDesktopApplication</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -147,26 +147,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="1_2.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WindowsDesktopApplication.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="1_2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WindowsDesktopApplication.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="1_2.rc" />
+    <ResourceCompile Include="WindowsDesktopApplication.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="1_2.ico" />
     <Image Include="small.ico" />
+    <Image Include="WindowsDesktopApplication.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
