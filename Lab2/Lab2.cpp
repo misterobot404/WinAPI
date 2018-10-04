@@ -3,24 +3,83 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-INT             ListIndex; //текущий индекс строки в списке
-INT             InstanceIndex; //вспомогательный индекс
-HWND    hList1, hCombo1;
-//еще один текстовый буфер для передачи данных
-char cBuffer[12];
+// Три кнопки, графическое окно, раскрывающийся список.
+// В списке два режима : ручной и автомат. При нажатии на первую кнопку – в окне рисуется круг,
+// вторую – прямоугольник, третью – линия случайной толщины, цвета и заливки.
+// А если включен автомат, то объекты рисуются непрерывно в случайном месте окна.
+
+HWND hCombo1; //	окно листбокс
+HWND hWndDialog; //	главное окно
+HANDLE h; //	второй поток
 
 HINSTANCE       ghInstance;   // Переменная для хранения хендела процесса                      
 // Описание используемой оконной процедуры
 BOOL CALLBACK   PviewDlgProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+
+DWORD WINAPI thread2(LPVOID t)
+{
+	InvalidateRect(hWndDialog, NULL, TRUE);
+	UpdateWindow(hWndDialog);
+	int RAND;
+	//генерируем элементы строки
+	while (true)
+	{
+		RAND = rand() % 3;
+		switch (RAND)
+		{
+		case 0:
+		{
+			HPEN pen;
+			HDC hdc = GetDC(hWndDialog);
+
+			int x = rand() % 800;
+			int y = rand() % 450;
+			int z = rand() % 255;
+			int width = rand() % 10;		
+			pen = CreatePen(PS_SOLID, width, RGB(x, y, z));
+			SelectObject(hdc, pen);
+
+			MoveToEx(hdc, x, y, 0);  //перемещение пера
+			LineTo(hdc, 600 - y, 230 - x/2); //рисовать линию
+
+			DeleteObject(pen); // удалить  карандаш
+			ReleaseDC(hWndDialog, hdc); // освободить девайс контекста
+		}
+			break;
+		case 1:
+		{
+			HDC hdc = GetDC(hWndDialog);	
+			double x = rand() % 10 + 1;
+			x = x / 10;
+			int y = rand() % 300;
+			int z = rand() % 5;
+			Rectangle(hdc, 260 * x - (y*z), 160 * x - (y*z), 575 * x - (y*z), 300 * x - (y*z));
+			ReleaseDC(hWndDialog, hdc);
+		}
+			break;
+		case 2:
+		{
+			HDC hdc = GetDC(hWndDialog);		
+			double x = rand() % 10;
+			x = x / 5;
+			Ellipse(hdc, 300* x, 340 * x, 530 * x, 120* x);
+			ReleaseDC(hWndDialog, hdc);
+		}
+			break;
+		default:
+			break;
+		}
+		Sleep(1000);
+	}
+	return 0;
+}
+
 // Главное приложение программы
 int WINAPI    WinMain(HINSTANCE   hInstance,
 	HINSTANCE   hPrevInstance,
 	LPSTR       lpCmdLine,
 	int         nCmdShow)
-
-
 {
-	HWND hWndDialog;
 	MSG     msg;
 
 	ghInstance = hInstance;
@@ -46,56 +105,107 @@ BOOL CALLBACK   PviewDlgProc(HWND    hWnd,
 	UINT    wMsg,
 	WPARAM  wParam,
 	LPARAM  lParam)
-
 {
 	switch (wMsg)
 	{
-		// Сообщение о инициализации диалогового окна
 	case WM_INITDIALOG:
-		char  szListText[256];
+	{
 		hCombo1 = GetDlgItem(hWnd, IDC_COMBO1);
-		ListIndex = SendMessage(hCombo1, CB_ADDSTRING, 0, (DWORD)TEXT(
-			"СТРОКА-001"));
-		SendMessage(hCombo1, CB_SETITEMDATA, ListIndex, 0);
-		// Пример занесения в снисок нескольких строк
-		for (InstanceIndex = 1; InstanceIndex < 4; InstanceIndex++)
-		{
-			sprintf_s(szListText, "СТРОКА-%d", InstanceIndex);
-			ListIndex = SendMessage(hCombo1, CB_ADDSTRING, 0, (LPARAM)szListText);
-			SendMessage(hCombo1, CB_SETITEMDATA, ListIndex, InstanceIndex);
-		}
 
-		SendMessage(hCombo1, WM_SETREDRAW, TRUE, 0);
+		SendMessage(hCombo1, CB_ADDSTRING, 0, (DWORD)TEXT(
+			"Ручной режим"));
+		SendMessage(hCombo1, CB_ADDSTRING, 0, (DWORD)TEXT(
+			"Автомат"));
 
+		// Выбор эл по умолчанию
 		SendMessage(hCombo1, CB_SETCURSEL, 0, 0);
-
-		break;
-		// Сообщение о закрытии диалогового окна
+	}
+	break;
 	case WM_CLOSE:
+	{
 		PostQuitMessage(0);
-		break;
-		// Сообщение от элементов диалогового окна
+	}
+	break;
+	// Сообщение от элементов диалогового окна
 	case WM_COMMAND:
+	{
 		switch (LOWORD(wParam))
 		{
-		case  PVIEW_COMPUTER:
+		case  IDC_CIRCLE:
 		{
-			char  szText[256];
-			GetDlgItemText(hWnd, IDC_EDIT1, (LPSTR)szText, 255);
-			SetWindowText(GetDlgItem(hWnd, IDC_EDIT1), "");
-			MessageBox(hWnd, szText, "Принят ТЕКСТ:", MB_OK);
-
+			HDC hdc = GetDC(hWnd);
+			InvalidateRect(hWnd, NULL, TRUE);
+			UpdateWindow(hWnd);
+			Ellipse(hdc, 300, 340, 530, 120);
+			ReleaseDC(hWnd, hdc);
+			//	char  szText[256]="hello";
+			//	GetDlgItemText(hWnd, IDC_EDIT1, (LPSTR)szText, 255);
+			//	SetWindowText(GetDlgItem(hWnd, IDC_EDIT1), "");
+			//	MessageBox(hWnd, szText, "Принят ТЕКСТ:", MB_OK);
 		}
 		break;
 
+		case  IDC_BOX:
+		{
+			HDC hdc = GetDC(hWnd);
+			InvalidateRect(hWnd, NULL, TRUE);
+			UpdateWindow(hWnd);
+			Rectangle(hdc, 260, 160, 575, 300);
+			ReleaseDC(hWnd, hdc);
+		}
+		break;
+
+		case  IDC_LINES:
+		{
+			InvalidateRect(hWnd, NULL, TRUE);
+			UpdateWindow(hWnd);
+
+			HPEN pen;
+			HDC hdc = GetDC(hWnd);
+
+			int width = rand() % 10;
+			int x = rand() % 255;
+			int y = rand() % 255;
+			int z = rand() % 255;
+
+			pen = CreatePen(PS_SOLID, width, RGB(x, y, z));
+			SelectObject(hdc, pen);
+
+			MoveToEx(hdc, 225, 230, 0);  //перемещение пера
+			LineTo(hdc, 600, 230); //рисовать линию
+
+			DeleteObject(pen); // удалить  карандаш
+			ReleaseDC(hWnd, hdc); // освободить девайс контекста			
+		}
+		break;
+		case IDC_COMBO1:
+		{
+			if (HIWORD(wParam) == CBN_SELCHANGE)
+			{
+				char str[8];
+				char str2[] = "Автомат";
+				GetDlgItemText(hWnd, IDC_COMBO1, str, 8);
+				if (strcmp(str, str2) == 0)
+				{
+					h = CreateThread(NULL, 0, thread2, NULL, 0, NULL);
+				}
+				else
+				{
+					InvalidateRect(hWndDialog, NULL, TRUE);
+					UpdateWindow(hWndDialog);
+					TerminateThread(h, 1);
+				}
+			}
+		}
+		break;
 		default:
 			return FALSE;
 		}
-		break;
+	}
+	break;
 
 	default:
 		return FALSE;
 	}
-
 	return TRUE;
 }
