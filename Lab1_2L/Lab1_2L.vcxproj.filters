@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Lab1_2L%28Desktop%29.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Sourse</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="1_2.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="1_2.ico">
+      <Filter>Resourse</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>Resourse</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resourse">
+      <UniqueIdentifier>{d148b22e-ee76-4e88-8cb0-1e7d38e820dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{242dfebe-4903-4d04-a667-dd3827e15404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sourse">
+      <UniqueIdentifier>{7d7d6fd7-e26a-4723-b437-9ff4d62a88db}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="1_2.rc">
+      <Filter>Resourse</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

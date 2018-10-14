@@ -32,9 +32,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lab1_2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Lab1_2%28Desktop%29.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Lab1_2.rc">
@@ -48,5 +46,8 @@
     <Image Include="Lab1_2.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Info.txt" />
   </ItemGroup>
 </Project>

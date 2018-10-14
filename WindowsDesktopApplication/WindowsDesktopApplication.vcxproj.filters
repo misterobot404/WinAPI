@@ -32,9 +32,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsDesktopApplication.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Desktop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsDesktopApplication.rc">
