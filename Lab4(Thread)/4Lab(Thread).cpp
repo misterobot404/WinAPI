@@ -1,4 +1,4 @@
-// compile with: /EHa
+// compile with: /EHsc
 #include <iostream>
 #include <windows.h>
 // WinAPI function to create Thread (_beginthread, _beginthreadex, CreateThread, etc.)
@@ -7,114 +7,55 @@
 // #include <thread>
 using namespace std;
 
-//HANDLE e;
-HANDLE exitCodeHandleOne;
-HANDLE exitCodeHandleTwo;
-HANDLE exitCodeHandleThree;
 double container = 0;
 
-void myException(unsigned int u, EXCEPTION_POINTERS* pExp)
+unsigned __stdcall thread(void *)
 {
-	throw u;
-}
-
-void threadOne(void *)
-{
-	cout << "Первый поток запущен\n";
-	exitCodeHandleOne = GetCurrentThread();
+	cout << "Поток запущен\n";
 	try
 	{
-		_set_se_translator(myException);
 		while (container < 100000)
 		{
-			int randOne = rand() % 1000;
-			int randTwo = 1 + rand() % 100;
+			//int max value
+			int randOne = rand() % 100000;
+			int randTwo = rand() % 1000;
+
+			if (randTwo == 0) throw -1;
+
 			container += (double)randOne / (double)randTwo;
 			if (container > 100000)
 			{
-				cout << "Контейнер заполнен первым потоком\n";
+				cout << "Контейнер заполнен\n";
 			}
-			Sleep(2);
+			Sleep(10);
 		}
 	}
-	catch (unsigned int u)
+	catch (...)
 	{
-		cout << "Ошибка в первом потоке\n";
+		cout << "Ошибка в потоке\n";
 	}
-}
-
-void threadTwo(void *)
-{
-	cout << "Второй поток запущен\n";
-	//exitCodeHandleTwo = GetCurrentThread();
-	try
-	{
-		_set_se_translator(myException);
-		while (container < 100000)
-		{
-			int randOne = rand() % 1000;
-			int randTwo = 1 + rand() % 100;
-			container += (double)randOne / (double)randTwo;
-			if (container > 100000)
-			{
-				cout << "Контейнер заполнен вторым потоком\n";			
-			}
-			Sleep(2);
-		}
-	}
-	catch (unsigned int u)
-	{
-		cout << "Ошибка во втором потоке\n";
-	}
-}
-
-void threadThree(void *)
-{
-	cout << "Третий поток запущен\n";
-	//exitCodeHandleThree = GetCurrentThread();
-	try
-	{
-		_set_se_translator(myException);
-		while (container < 100000)
-		{
-			int randOne = rand() % 1000;
-			int randTwo = rand() % 100;
-			container += randOne / randTwo;
-			if (container > 100000)
-			{
-				cout << "Контейнер заполнен третьим потоком\n";
-				//SetEvent(e);
-			}
-			Sleep(1);
-		}
-		
-	}
-	catch (unsigned int u)
-	{
-		cout << "Ошибка в третьем потоке\n";
-	}
+	return 1;
 }
 
 int	main()
 {	
 	setlocale(LC_ALL, "rus");
 	system("color 0A ");
-	//e = CreateEvent(NULL, FALSE, FALSE, NULL);
 
-	_beginthread(threadOne, 0, NULL);	
-	//_beginthread(threadTwo, 0, NULL);
-	_beginthread(threadThree, 0, NULL);
+	HANDLE hThread[3];
+	hThread[0] = (HANDLE)_beginthreadex(NULL, 0, &thread, NULL, 0, NULL);
+	hThread[1] = (HANDLE)_beginthreadex(NULL, 0, &thread, NULL, 0, NULL);
+	hThread[2] = (HANDLE)_beginthreadex(NULL, 0, &thread, NULL, 0, NULL);
 
-	//WaitForSingleObject(e, INFINITE);
+	//WaitForSingleObject(hThread, INFINITE);
+	//WaitForMultipleObjects(3, hThread, TRUE, INFINITE);
 
-	Sleep(500);
+	//Analyze return code
+	DWORD exitcode;
+	while ((GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE) || 
+		(GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE) || 
+		(GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE)) {};
 
-	while (true)
-	{
-		DWORD exitcode;
-		GetExitCodeThread(exitCodeHandleOne, &exitcode);
-		if (exitcode != STILL_ACTIVE) break;
-	}
 	cout << "Все потоки завершили работу\n";
 	system("pause");
 	return 0;
