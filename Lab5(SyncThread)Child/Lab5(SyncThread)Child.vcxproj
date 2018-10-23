@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{2A702115-A5E3-49C3-9F77-4A3C91D5612C}</ProjectGuid>
-    <RootNamespace>Lab5SyncThread</RootNamespace>
+    <ProjectGuid>{3420D234-9219-4B48-86ED-15C66AA403E3}</ProjectGuid>
+    <RootNamespace>Lab5SyncThreadChild</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -115,10 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Lab5(SyncThread).cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Info.txt" />
+    <ClCompile Include="Lab5(SyncThread)Child.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

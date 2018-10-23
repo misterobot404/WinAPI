@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab5(SyncThread).cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Info.txt" />
+    <ClCompile Include="Lab5(SyncThread)Child.cpp" />
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@
 // А если включен автомат, то объекты рисуются непрерывно в случайном месте окна.
 
 HWND hCombo1; //	окно листбокс
-HWND hWndDialog; //	главное окно
+HWND hWnd; //	главное окно
 HANDLE h; //	второй поток
 
 HINSTANCE       ghInstance;   // Переменная для хранения хендела процесса                      
@@ -18,8 +18,8 @@ BOOL CALLBACK   PviewDlgProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam)
 
 DWORD WINAPI thread2(LPVOID t)
 {
-	InvalidateRect(hWndDialog, NULL, TRUE);
-	UpdateWindow(hWndDialog);
+	InvalidateRect(hWnd, NULL, TRUE);
+	UpdateWindow(hWnd);
 	int RAND;
 	//генерируем элементы строки
 	while (true)
@@ -30,7 +30,7 @@ DWORD WINAPI thread2(LPVOID t)
 		case 0:
 		{
 			HPEN pen;
-			HDC hdc = GetDC(hWndDialog);
+			HDC hdc = GetDC(hWnd);
 
 			int x = rand() % 800;
 			int y = rand() % 450;
@@ -43,27 +43,27 @@ DWORD WINAPI thread2(LPVOID t)
 			LineTo(hdc, 600 - y, 230 - x/2); //рисовать линию
 
 			DeleteObject(pen); // удалить  карандаш
-			ReleaseDC(hWndDialog, hdc); // освободить девайс контекста
+			ReleaseDC(hWnd, hdc); // освободить девайс контекста
 		}
 			break;
 		case 1:
 		{
-			HDC hdc = GetDC(hWndDialog);	
+			HDC hdc = GetDC(hWnd);	
 			double x = rand() % 10 + 1;
 			x = x / 10;
 			int y = rand() % 300;
 			int z = rand() % 5;
 			Rectangle(hdc, 260 * x - (y*z), 160 * x - (y*z), 575 * x - (y*z), 300 * x - (y*z));
-			ReleaseDC(hWndDialog, hdc);
+			ReleaseDC(hWnd, hdc);
 		}
 			break;
 		case 2:
 		{
-			HDC hdc = GetDC(hWndDialog);		
+			HDC hdc = GetDC(hWnd);		
 			double x = rand() % 10;
 			x = x / 5;
 			Ellipse(hdc, 300* x, 340 * x, 530 * x, 120* x);
-			ReleaseDC(hWndDialog, hdc);
+			ReleaseDC(hWnd, hdc);
 		}
 			break;
 		default:
@@ -84,19 +84,19 @@ int WINAPI    WinMain(HINSTANCE   hInstance,
 
 	ghInstance = hInstance;
 	// Создание  диалогового окна
-	hWndDialog = CreateDialogParam(hInstance,
+	hWnd = CreateDialogParam(hInstance,
 		MAKEINTRESOURCE(PVIEW_DLG),
 		NULL,
 		(DLGPROC)PviewDlgProc,
 		(LONG)0);
 	// Стандартный цикл обработки сообщений приложения
 	while (GetMessage(&msg, NULL, 0, 0))
-		if (!IsDialogMessage(hWndDialog, &msg))
+		if (!IsDialogMessage(hWnd, &msg))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-	DestroyWindow(hWndDialog);
+	DestroyWindow(hWnd);
 	return 0;
 }
 
@@ -191,8 +191,8 @@ BOOL CALLBACK   PviewDlgProc(HWND    hWnd,
 				}
 				else
 				{
-					InvalidateRect(hWndDialog, NULL, TRUE);
-					UpdateWindow(hWndDialog);
+					InvalidateRect(hWnd, NULL, TRUE);
+					UpdateWindow(hWnd);
 					TerminateThread(h, 1);
 				}
 			}
