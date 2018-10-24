@@ -1,7 +1,7 @@
 #include <windows.h>
 #include "resource.h"
 
-HINSTANCE       ghInstance;   // Переменная для хранения хендела процесса                      
+
 // Описание используемой оконной процедуры
 BOOL CALLBACK   PviewDlgProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 // Главное приложение программы
@@ -13,7 +13,7 @@ int WINAPI    WinMain(HINSTANCE   hInstance,
 	HWND hWndDialog;
 	MSG     msg;
 
-	ghInstance = hInstance;
+	HINSTANCE ghInstance = hInstance;
 	// Создание  диалогового окна
 	hWndDialog = CreateDialogParam(hInstance,
 		MAKEINTRESOURCE(PVIEW_DLG),
@@ -43,6 +43,9 @@ BOOL CALLBACK   PviewDlgProc(HWND    hWnd,
 	// Сообщение о инициализации диалогового окна
 	case WM_INITDIALOG:
 	{
+		HWND editText = GetDlgItem(hWnd, IDC_EDIT1);
+		SetWindowText(editText, L" Click and drag any Slider or\r\n Scroll Bar control or click on\r\nthe Up-Down control buttons.");
+		//SetFocus(hWnd);
 		SetWindowText(hWnd, L"Fun example using - Scroll Bar, Up Down, Progress controls");
 	}
 	break;
@@ -50,7 +53,6 @@ BOOL CALLBACK   PviewDlgProc(HWND    hWnd,
 	// Сообщение о закрытии диалогового окна
 	case WM_CLOSE:
 	{
-
 		PostQuitMessage(0);
 	}
 	break;
@@ -60,7 +62,6 @@ BOOL CALLBACK   PviewDlgProc(HWND    hWnd,
 	{
 		switch (LOWORD(wParam))
 		{
-
 		default:
 			return FALSE;
 		}
