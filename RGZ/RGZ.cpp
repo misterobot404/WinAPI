@@ -3,7 +3,7 @@
 
 HINSTANCE       ghInstance;   // Переменная для хранения хендела процесса                      
 // Описание используемой оконной процедуры
-BOOL CALLBACK   PviewDlgProc(HWND  hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
+BOOL CALLBACK   PviewDlgProc(HWND hWnd, UINT wMsg, WPARAM wParam, LPARAM lParam);
 // Главное приложение программы
 int WINAPI    WinMain(HINSTANCE   hInstance,
 	HINSTANCE   hPrevInstance,
@@ -20,6 +20,7 @@ int WINAPI    WinMain(HINSTANCE   hInstance,
 		NULL,
 		(DLGPROC)PviewDlgProc,
 		(LONG)0);
+	
 	// Стандартный цикл обработки сообщений приложения
 	while (GetMessage(&msg, NULL, 0, 0))
 		if (!IsDialogMessage(hWndDialog, &msg))
@@ -39,22 +40,32 @@ BOOL CALLBACK   PviewDlgProc(HWND    hWnd,
 {
 	switch (wMsg)
 	{
-		// Сообщение о инициализации диалогового окна
+	// Сообщение о инициализации диалогового окна
 	case WM_INITDIALOG:
-		break;
-		// Сообщение о закрытии диалогового окна
+	{
+		SetWindowText(hWnd, L"Fun example using - Scroll Bar, Up Down, Progress controls");
+	}
+	break;
+
+	// Сообщение о закрытии диалогового окна
 	case WM_CLOSE:
+	{
+
 		PostQuitMessage(0);
-		break;
-		// Сообщение от элементов диалогового окна
+	}
+	break;
+
+	// Сообщение от элементов диалогового окна
 	case WM_COMMAND:
+	{
 		switch (LOWORD(wParam))
 		{
 
 		default:
 			return FALSE;
 		}
-		break;
+	}
+	break;
 
 	default:
 		return FALSE;
