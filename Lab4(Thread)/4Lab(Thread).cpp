@@ -27,7 +27,7 @@ unsigned __stdcall thread(void *)
 			{
 				cout << "Контейнер заполнен\n";
 			}
-			Sleep(10);
+			Sleep(100);
 		}
 	}
 	catch (...)
@@ -53,8 +53,8 @@ int	main()
 	//Analyze return code
 	DWORD exitcode;
 	while ((GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE) || 
-		(GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE) || 
-		(GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE)) {};
+		(GetExitCodeThread(hThread[1], &exitcode) && exitcode == STILL_ACTIVE) || 
+		(GetExitCodeThread(hThread[2], &exitcode) && exitcode == STILL_ACTIVE)) {};
 
 	cout << "Все потоки завершили работу\n";
 	system("pause");
