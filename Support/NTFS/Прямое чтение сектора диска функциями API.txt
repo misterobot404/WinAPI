@@ -1,0 +1,49 @@
+//Пример программы для прямого чтения секторов дисковых устройств из под ядра NT
+//С помощью API функции CreateFile дисковое устройство открывается как файл, а дальше ... все ясно ...
+
+#include <windows.h>
+#include <stdio.h>
+
+void main (void)
+{
+ int startinglogicalsector=0, //номер сектора, с которого начнется чтение 
+	 numberofsectors=1; // кличество читаемых секторов
+
+ DWORD bytesread;               // вспомог. ячейка
+ char drive_name[] = "\\\\.\\a:"; //имя дисковода А:
+ HANDLE hFile;
+
+// открыть дисковое устройство как файл
+ hFile=CreateFile(drive_name,GENERIC_READ,FILE_SHARE_READ|FILE_SHARE_WRITE, NULL,OPEN_EXISTING,0,NULL);
+  if(hFile==INVALID_HANDLE_VALUE)
+    {
+    MessageBox(0,"Открыть устройство НЕ удалось",NULL,MB_OK|MB_ICONSTOP);
+    return;
+    }
+
+//установить начальную точку чтения в файле на начало заданного сектора
+  SetFilePointer(hFile, 512*startinglogicalsector, 0, FILE_BEGIN);
+
+// выделить память для результата чтения  
+  PBYTE buff=(PBYTE)malloc((numberofsectors)*512); 
+// читать данные с устройства
+  if(!ReadFile(hFile, buff,numberofsectors*512, &bytesread, NULL)) 
+		{free(buff); 
+                             MessageBox(0,"Чтение данных НЕ удалось", NULL, MB_OK|MB_ICONSTOP); 
+                             return;}
+
+// закрыть файл (устройство)  
+CloseHandle(hFile);
+
+// распечатать результаты в 16-ти ричной форме
+int j=0;
+for (int i=0; i<512; i++)
+{if (buff[i]<16) printf("%c", '0');
+ printf("%X ", buff[i]);
+ j++;
+ if (j>15) {j=0; printf("\n"); }
+}
+
+free(buff);
+MessageBox(0,"OK!!!", "Результат", MB_OK);
+}
