@@ -2,18 +2,12 @@
 #include <windows.h>
 #include <process.h>
 
-// Идентификаторы окон
-#define ID_FIRSTCHILD	100
-#define ID_SECONDCHILD	101
-#define ID_THIRDCHILD	102
-
 // Идентификаторы кнопок
 #define EXIT 404
 #define RUN 405
 
 /*  Declare Windows procedure  */
 LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK ChildProc(HWND, UINT, WPARAM, LPARAM);
 
 /*  Make the class name into a global variable  */
 TCHAR szClassName[] = _T("CodeBlocksWindowsApp");
@@ -28,7 +22,7 @@ unsigned __stdcall thread(void *)
 	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
 	ShExecInfo.hwnd = NULL;
 	ShExecInfo.lpVerb = NULL;
-	ShExecInfo.lpFile = L"C:\\Users\\miste\\Source\\Repos\\WinAPI\\Debug\\Lab5(SyncThread)Child.exe";
+	ShExecInfo.lpFile = L"C:\\Users\\miste\\Source\\WinAPI\\Debug\\Lab5(SyncThread)Child.exe";
 	ShExecInfo.lpParameters = L"";
 	ShExecInfo.lpDirectory = NULL;
 	ShExecInfo.nShow = SW_SHOW;
@@ -46,9 +40,15 @@ unsigned __stdcall myWhile(void *)
 	{
 		while (i < 5)
 		{
-			_beginthreadex(NULL, 0, &thread, NULL, 0, NULL);
-			++i;
+			int rnd = rand() % 1000 + 1;
+			if (rnd>900 && rnd < 1000)
+			{
+				_beginthreadex(NULL, 0, &thread, NULL, 0, NULL);
+				++i;
+			}
+			else Sleep(200);
 		}
+		Sleep(200);
 	}
 	return 0;
 }

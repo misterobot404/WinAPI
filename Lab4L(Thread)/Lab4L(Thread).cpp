@@ -103,7 +103,7 @@ int	main()
 	hThread[2] = (HANDLE)_beginthreadex(NULL, 0, &SquareMean, NULL, 0, NULL);
 	cout << "Все потоки запущены\n";
 
-	//Analyze return code
+	// Analyze return code
 	DWORD exitcode;
 	while ((GetExitCodeThread(hThread[0], &exitcode) && exitcode == STILL_ACTIVE) ||
 		(GetExitCodeThread(hThread[1], &exitcode) && exitcode == STILL_ACTIVE) ||

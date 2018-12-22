@@ -63,14 +63,6 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 		NULL                 /* No Window Creation data */
 	);
 
-	while (GetMessage(&messages, NULL, 0, 0))
-	{
-		/* Translate virtual-key messages into character messages */
-		TranslateMessage(&messages);
-		/* Send message to WindowProcedure */
-		DispatchMessage(&messages);
-	}
-
 	return messages.wParam;
 }
 
