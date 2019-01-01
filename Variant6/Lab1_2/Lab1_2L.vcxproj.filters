@@ -44,4 +44,7 @@
       <Filter>Resourse</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Info.txt" />
+  </ItemGroup>
 </Project>

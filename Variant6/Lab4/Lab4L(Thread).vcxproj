@@ -20,9 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{CAB7FC51-EF7D-4CDD-827E-526796BA9E07}</ProjectGuid>
-    <RootNamespace>Lab5LSyncThread</RootNamespace>
+    <ProjectGuid>{2A4ADD47-BEB3-49E9-ABD5-09B2E5E2F5FB}</ProjectGuid>
+    <RootNamespace>Lab4LThread</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>Lab4</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -115,10 +116,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="Info.txt" />
+    <ClCompile Include="Lab4L(Thread).cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab5L(SyncThread).cpp" />
+    <Text Include="Info.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

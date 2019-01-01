@@ -23,6 +23,7 @@
     <ProjectGuid>{3C30EFAA-DBC6-487F-B116-476342140FB7}</ProjectGuid>
     <RootNamespace>RgzL</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>Rgz</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
