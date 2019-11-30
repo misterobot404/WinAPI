@@ -1,0 +1,20 @@
+When a user clicks the name of a displayed month a pop-up menu appears that lists all months within the year. The user can select a month on the list.
+
+If the user clicks the year displayed next to a month name an up-down control appears in place of the year. The user can change the year with this control.
+
+The user can return to the current day by clicking the "T oday" tent at the bottom of the control. If the current day is not visible the control updates its display to show it.
+
+
+
+Когда пользователь нажимает на название отображаемого месяца, появляется всплывающее меню со списком всех месяцев в году. Пользователь может выбрать месяц в списке.
+
+Если пользователь щелкает год, отображаемый рядом с названием месяца, вместо года появляется элемент управления, указывающий вниз. Пользователь может изменить год с помощью этого элемента управления.
+
+Пользователь может вернуться к текущему дню, щелкнув палатку «T oday» в нижней части элемента управления. Если текущий день не виден, элемент управления обновляет свой дисплей, чтобы показать его.
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+Click on the arrow button to pop open the Date Picker. Choose a new date by clicking on it.
+Нажмите на кнопку со стрелкой, чтобы открыть окно выбора даты. Выберите новую дату, нажав на нее

@@ -1,0 +1,24 @@
+
+PE and COFF File Viewer
+PEview V0.67 Copyright © 1997-2000 Wayne J. Radburn
+All rights reserved
+
+The author licenses this read-only version of PEview to you on the
+following terms only. You may copy and distribute it without charging
+for this software. You may use it for non-commercial educational
+purposes. No license fee is required for such usage, otherwise, please
+contact the author via e-mail regarding licensing for other usage. 
+
+Should you find this licensing agreement unacceptable or PEview
+unsuitable, then you may Uninstall which removes its registry settings. 
+
+The author provides and licenses this software "as is" without warranty
+of any kind, either expressed or implied, including but not limited to
+the implied warranties of merchantability and fitness for a particular
+purpose. 
+
+The author will not be liable for any special, incidental, indirect,
+consequential, or similar damages due to the loss of data or any other
+reason, even if the author has been advised of the possibility of such
+damages. In no event shall any claimant be entitled to damages exceeding
+the license fee paid to and received by the author for this software.

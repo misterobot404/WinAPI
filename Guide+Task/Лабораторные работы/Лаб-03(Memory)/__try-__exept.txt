@@ -1,0 +1,16 @@
+    __try {
+        testProcessorFault();
+    }
+    __except(filterException(GetExceptionCode(), GetExceptionInformation())) {
+        
+
+
+
+
+__try {
+	//работа приложения
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER) {//отлов системных исключений ОС Windows
+
+
+	}
